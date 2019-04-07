@@ -2,19 +2,20 @@
 source("src/00_Packages.R")
 
 data <- read.csv(file = "data/Quarterly_London_1985_01_01-2019_02_01.csv", header = TRUE)
-data <- as.data.frame(data)
-data_TS <- ts(data)
-names(data)
-attach(data_TS)
+#data <- as.data.frame(data)
+AllPropertyAverage <- data$Average_Price_All_Types 
+AllPropertyAverage_TS <-ts(data = AllPropertyAverage, start = c(1996,1), frequency = 12)
 
 
 
-ucm(formula, data, irregular = TRUE, irregular.var = NA, level = TRUE,
-    level.var = NA, slope = FALSE, slope.var = NA, season = FALSE,
-    season.length = NA, season.var = NA, cycle = FALSE, cycle.period = NA,
-    cycle.var = NA)
 
-modelHPI <- ucm(HPI_All_Types~0, data = data_TS, slope = TRUE)
-plot(data_TS[,6] , ylab = "HPI")
-lines(modelHPI$s.level, col = "blue")
-legend("topright", legend = c("Observed flow","S_level"), col = c("black","blue"), lty = 1)
+
+
+# plot the data using ggplot2
+ggplot(data=AllPropertyAverage_TS, aes()) +
+  geom_point() +
+  labs(title = "Precipitation - Boulder, Colorado")
+
+
+p <- autoplot(AllPropertyAverage_TS)
+str(p)
